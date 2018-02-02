@@ -1,9 +1,11 @@
 A task:
 =====================
 Calculate the difference between 2 input dates without using any PHP functions related to the date.
+
 Incoming data:
 ---------------------------------------------------------------------------
 2 dates in the format `"YYYY-MM-DD" (2015-03-05, for example)`
+
 Outgoing data:
 ---------------------------------------------------------------------------
 ```php
