@@ -26,10 +26,16 @@ Without using the DateTime class
 Useful links:
 ====================
 * JQuery UI Datepicker
+
 <https://jqueryui.com/datepicker/>
+
 * Checking For Leap Year Using PHP
+
 <https://davidwalsh.name/checking-for-leap-year-using-php>
+
 <https://stackoverflow.com/questions/17924481/find-leap-years>
+
 * stdClass
 <https://stackoverflow.com/questions/931407/what-is-stdclass-in-php>
+
 <https://www.webmaster-source.com/2009/08/20/php-stdclass-storing-data-object-instead-array/>
