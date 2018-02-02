@@ -1,0 +1,12 @@
+/.idea
+/vendor
+/node_modules
+.env
+
+# folder BACKUP
+BACKUP/
+
+#zip-files
+*.zip
+
+
