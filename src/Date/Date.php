@@ -3,7 +3,7 @@ namespace src\Date;
 use Exception;
 
 /**
- * Class DateTerms calculate and shows date term between two dates, return object of stdClass to view
+ * Class Date calculate and shows date term between two dates, return object of stdClass to view
  */
 class Date
 {
