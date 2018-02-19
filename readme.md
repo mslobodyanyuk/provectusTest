@@ -25,10 +25,6 @@ Without using the DateTime class
 
 Useful links:
 ====================
-* JQuery UI Datepicker
-
-<https://jqueryui.com/datepicker/>
-
 * Checking For Leap Year Using PHP
 
 <https://davidwalsh.name/checking-for-leap-year-using-php>
