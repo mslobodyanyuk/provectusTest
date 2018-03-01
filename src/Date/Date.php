@@ -1,6 +1,6 @@
 <?php
 namespace src\Date;
-use Exception;
+
 /**
  * Class Date calculate and shows date term between two dates, return object of stdClass to view
  */
@@ -40,18 +40,9 @@ class Date
         self::DECEMBER_NUMBER =>self::DECEMBER_DAYS,];
 
     const
-        //__construct
-        START_YEAR_LIMIT = 1901,
-        END_YEAR_LIMIT = 2050,
-        MONTHS_IN_YEAR = 12,
-        GREATEST_NUMBER_MONTH_DAYS = 31,
-        //isLeapYear
-        LEAP_YEAR_YEARS_PERIOD = 4,
-        CENTURY_YEARS = 100,
-        FOUR_CENTURY_YEARS = 400,
         //private $noLeapYear / private $leapYear
         JANUARY_NUMBER = '1', JANUARY_DAYS = 31,
-        FEBRUARY_NUMBER = '2', FEBRUARY_DAYS_NO_LEAP_YEAR = 28, FEBRUARY_DAYS_LEAP_YEAR = 29,
+        FEBRUARY_NUMBER = '2' /*checkLeapYear*/, FEBRUARY_DAYS_NO_LEAP_YEAR = 28, FEBRUARY_DAYS_LEAP_YEAR = 29,
         MARCH_NUMBER = '3', MARCH_DAYS = 31,
         APRIL_NUMBER = '4', APRIL_DAYS = 30,
         MAY_NUMBER = '5', MAY_DAYS = 31,
@@ -62,6 +53,10 @@ class Date
         OCTOBER_NUMBER = '10', OCTOBER_DAYS = 31,
         NOVEMBER_NUMBER = '11', NOVEMBER_DAYS = 30,
         DECEMBER_NUMBER = '12', DECEMBER_DAYS = 31,
+        //isLeapYear
+        LEAP_YEAR_YEARS_PERIOD = 4,
+        CENTURY_YEARS = 100,
+        FOUR_CENTURY_YEARS = 400,
         //fullYearsDays
         LEAP_YEAR_DAYS = 366,
         NO_LEAP_YEAR_DAYS = 365;
@@ -79,21 +74,12 @@ class Date
         $this->month = (integer)$arr[1];
         $this->days = (integer)$arr[2];
 
-        if ( (($this->year < self::START_YEAR_LIMIT) || ($this->year > self::END_YEAR_LIMIT) || ($this->year == 0))
-            ||
-             (($this->month == 0) || ($this->month > self::MONTHS_IN_YEAR))
-            ||
-             (($this->days == 0))) {
-            throw new Exception ("Incorrect date 'yyyy-mm-dd' is entered, check year 'yyyy', month 'mm'( 1-12 ), day 'dd'( 1-31, february leap year = 29 days, otherwise = 28 )");
-        }
+        DateVerification::overallDateCheck($this->year, $this->month, $this->days);
 
-        //TODO: need verification for "2017-02-31" + isLeapYear + constants from leapYer/noLeapYear
         if($this->isLeapYear($this->year)){
-            if ($this->days > $this->leapYear[$this->month]){
-                 throw new Exception ("Incorrect date: number days in this month )");
-            }
-        }elseif($this->days > $this->noLeapYear[$this->month]){
-            throw new Exception ("Incorrect date: number days in this month )");
+            DateVerification::daysInMonthCheck($this->days, $this->month, $this->leapYear);
+        }else{
+            DateVerification::daysInMonthCheck($this->days, $this->month, $this->noLeapYear);
         }
 
         $this->totalDays = $this->countTotalDates($this->year, $this->month, $this->days);
@@ -154,6 +140,22 @@ class Date
     }
 
     /**
+     * method invertYearsTotalDays(DateInterval $dateInterval, Date $date) calculates the totalDays in invert = true case
+     * @param DateInterval $dateInterval - object of DateInterval
+     * @param Date $date - object of Date
+     * @return int $invertYearsTotalDays;
+     */
+    public function invertYearsTotalDays(DateInterval $dateInterval, Date $date)
+    {
+        if($dateInterval->years > 0) {
+            $invertYearsTotalDays = abs($this->totalDays - $date->getTotalDays());
+        } else{
+            $invertYearsTotalDays = $this->days;
+        }
+        return $invertYearsTotalDays;
+    }
+
+    /**
      * method diff(Date $date) calculates the date difference parameters
      * @param Date $date - object of Date
      * @return object $dateInterval object of DateInterval()
@@ -168,11 +170,7 @@ class Date
         if($dateInterval->invert) {
             $dateInterval->months = 0;
             $dateInterval->days = $this->days;
-            if($dateInterval->years > 0) {
-                $dateInterval->totalDays = abs($this->totalDays - $date->getTotalDays());
-            } else{
-                $dateInterval->totalDays = $this->days;
-            }
+            $dateInterval->totalDays = $this->invertYearsTotalDays($dateInterval, $date);
         }else{
             $dateInterval->months = abs($this->month - $date->getMonths());
             $dateInterval->days = abs($this->days - $date->getDays());
@@ -226,20 +224,30 @@ class Date
     }
 
     /**
-     * method fullYearsDays(array $yearsToCheck) returns the number of days of full years
-     * @param array $yearsToCheck is an array with a list of years
-     * @return int $fullYearsDays - the number of days in full years
+     * method addYearsDays($year) returns the number of days of full years, leap or not
+     * @return int $addFullYearsDays - the number of days in full years
      */
-    private function fullYearsDays(array $yearsToCheck)
+    private function addFullYearsDays($checkedYear)
+    {
+        if ($this->isLeapYear($checkedYear)) {
+            $addFullYearsDays = self::LEAP_YEAR_DAYS;
+        } else {
+            $addFullYearsDays = self::NO_LEAP_YEAR_DAYS;
+        }
+        return $addFullYearsDays;
+    }
+
+    /**
+     * method fullYearsDays(array $yearsToCheck) returns the sum number of days of full years
+     * @param array $yearsToCheck is an array with a list of years
+     * @return int $fullYearsDays - the sum number of days in full years
+     */
+    private function FullYearsDays(array $yearsToCheck)
     {
         $fullYearsDays = 0;
         foreach ($yearsToCheck as $checkedYear) {
             if ($checkedYear <> $this->year) {
-                if ($this->isLeapYear($checkedYear)) {
-                    $fullYearsDays = $fullYearsDays + self::LEAP_YEAR_DAYS;
-                } else {
-                    $fullYearsDays = $fullYearsDays + self::NO_LEAP_YEAR_DAYS;
-                }
+                $fullYearsDays = $fullYearsDays + $this->addFullYearsDays($checkedYear);
             }
         }
         return $fullYearsDays;
