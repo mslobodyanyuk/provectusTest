@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Максим
- * Date: 01.03.2018
- * Time: 21:20
- */
+
 
 namespace src\Date;
 use Exception;
 
 /**
- *
+ * Class DateVerification check $stringData param in class Date constructor
  */
 class DateVerification {
 
@@ -21,9 +16,10 @@ class DateVerification {
         GREATEST_NUMBER_MONTH_DAYS = 31;
 
     /**
-     * @param $year
-     * @param $month
-     * @param $days
+     * method overallDateCheck($year, $month, $days) performs a general check of the entered date
+     * @param $year - year from entered $stringData
+     * @param $month - month from entered $stringData
+     * @param $days - days year from entered $stringData
      * @throws Exception
      */
     public static function overallDateCheck($year, $month, $days)
@@ -38,9 +34,10 @@ class DateVerification {
     }
 
     /**
-     * @param $days
-     * @param $month
-     * @param array $typeYear
+     * method daysInMonthCheck($days, $month, array $typeYear) checks the number of days in a leap or no leap year
+     * @param $month - month from entered $stringData
+     * @param $days - days year from entered $stringData
+     * @param array $typeYear - contains array of leap or no leap year
      * @throws Exception
      */
     public static function daysInMonthCheck($days, $month, array $typeYear)
