@@ -70,14 +70,14 @@ class DateIntervalController {
         /***********************************(invert = 1) && ($d1->year > $d2->year)***********************************/
 
         /***********************************2017-02-31***********************************/
-        /*
+
             //DateVerification::overallDateCheck($this->year, $this->month, $this->days);
                 //$interval[] = $d1 = "-02-31";
                 //$interval[] = $d1 = "1901-12-32";
             //DateVerification::daysInMonthCheck($this->days, $this->month, $this->leapYear);
                 //$interval[] = $d1 = "2017-04-31";
                 //$interval[] = $d1 = "2017-02-31";
-        $d1 = new Date($d1);
+        /*  $d1 = new Date($d1);
         $interval[] = $d2 = "2017-02-31";
         $d2 = new Date($d2);
         $interval[] = $d1->diff($d2);
@@ -86,8 +86,8 @@ class DateIntervalController {
         $td1 = new DateTime("2017-02-31");
         $interval[] = '$td2 = new DateTime("2017-02-31")';
         $td2 = new DateTime("2017-02-31");
-        $interval[] = $td1->diff($td2);
-        */
+        $interval[] = $td1->diff($td2);*/
+
         /***********************************2017-02-31***********************************/
 
         return $interval;
