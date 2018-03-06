@@ -122,24 +122,6 @@ class Date
     }
 
     /**
-     * method getLeapYear() is a getter for totalDays property
-     * @return array $this->leapYear;
-     */
-    public function getLeapYear()
-    {
-        return $this->leapYear;
-    }
-
-    /**
-     * method getNoLeapYear() is a getter for totalDays property
-     * @return array $this->noLeapYear;
-     */
-    public function getNoLeapYear()
-    {
-        return $this->noLeapYear;
-    }
-
-    /**
      * method invertYearsTotalDays(DateInterval $dateInterval, Date $date) calculates the totalDays in invert = true case
      * @param DateInterval $dateInterval - object of DateInterval
      * @param Date $date - object of Date
