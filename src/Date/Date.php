@@ -23,10 +23,10 @@ class Date
      */
     private $totalDays;
 
+
     /**
-     * method __construct($stringDate) Date constructor
-     * @param string $stringDate date in string format 'yyyy-mm-dd'
-     * @throws Exception
+     * @param string $stringDate
+     * @throws \Exception
      */
     public function __construct($stringDate)
     {
@@ -36,20 +36,13 @@ class Date
         $this->month = (integer)$arr[1];
         $this->days = (integer)$arr[2];
 
-        DateVerification::overallDateCheck($this->year, $this->month, $this->days);
-
-        if(Year::isLeapYear($this->year)){
-            DateVerification::daysInMonthCheck($this->days, $this->month, Year::$leapYear);
-        }else{
-            DateVerification::daysInMonthCheck($this->days, $this->month, Year::$noLeapYear);
-        }
+        DateVerification::validate($this->year, $this->month, $this->days);
 
         $this->totalDays = $this->countTotalDates($this->year, $this->month, $this->days);
     }
 
     /**
-     * method getYear() is a getter for year property
-     * @return int $this->year;
+     * @return int
      */
     public function getYear()
     {
@@ -57,8 +50,7 @@ class Date
     }
 
     /**
-     * method getMonths() is a getter for month property
-     * @return int $this->month;
+     * @return int
      */
     public function getMonths()
     {
@@ -66,8 +58,7 @@ class Date
     }
 
     /**
-     * method getDays() is a getter for days property
-     * @return int $this->days;
+     * @return int
      */
     public function getDays()
     {
@@ -75,8 +66,7 @@ class Date
     }
 
     /**
-     * method getTotalDays() is a getter for totalDays property
-     * @return int $this->totalDays;
+     * @return int
      */
     public function getTotalDays()
     {
@@ -84,25 +74,18 @@ class Date
     }
 
     /**
-     * method invertYearsTotalDays(DateInterval $dateInterval, Date $date) calculates the totalDays in invert = true case
-     * @param DateInterval $dateInterval - object of DateInterval
-     * @param Date $date - object of Date
-     * @return int $invertYearsTotalDays;
+     * @param DateInterval $dateInterval
+     * @param Date $date
+     * @return int|number
      */
     private function invertYearsTotalDays(DateInterval $dateInterval, Date $date)
     {
-        if($dateInterval->years > 0) {
-            $invertYearsTotalDays = abs($this->totalDays - $date->getTotalDays());
-        } else{
-            $invertYearsTotalDays = $this->days;
-        }
-        return $invertYearsTotalDays;
+        return ($dateInterval->years > 0) ? abs($this->totalDays - $date->getTotalDays()) : $this->days;
     }
 
     /**
-     * method diff(Date $date) calculates the date difference parameters
-     * @param Date $date - object of Date
-     * @return object $dateInterval object of DateInterval()
+     * @param Date $date
+     * @return DateInterval
      */
     public function diff(Date $date)
     {
@@ -124,19 +107,14 @@ class Date
     }
 
     /**
-     * method countTotalDates() calculate total number of days in date
-     * @return int $totalDates
+     * @return int
      */
     private function countTotalDates()
     {
         $totalDates = 0;
         $yearsToCheck = range(1, $this->year);
 
-        $yearObject = new Year();
-
-        $fullYearsDays = $yearObject->fullYearsDays($yearsToCheck, $this->year);
-        $daysInEndYear = $yearObject->daysInEndYear($this->year, $this->month, $this->days);
-        $totalDates = $fullYearsDays + $daysInEndYear;
+        $totalDates = Year::fullYearsDays($this->year, $yearsToCheck) + Year::daysInEndYear($this->year, $this->month, $this->days);
 
         return $totalDates;
     }

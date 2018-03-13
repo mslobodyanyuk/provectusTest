@@ -72,12 +72,13 @@ class DateIntervalController {
         /***********************************2017-02-31***********************************/
 
             //DateVerification::overallDateCheck($this->year, $this->month, $this->days);
-                //$interval[] = $d1 = "-02-31";
-                //$interval[] = $d1 = "1901-12-32";
+              // $interval[] = $d1 = "-02-31";
+              // $interval[] = $d1 = "1901-12-32";
             //DateVerification::daysInMonthCheck($this->days, $this->month, $this->leapYear);
                 //$interval[] = $d1 = "2017-04-31";
                 //$interval[] = $d1 = "2017-02-31";
-        /*  $d1 = new Date($d1);
+/*
+        $d1 = new Date($d1);
         $interval[] = $d2 = "2017-02-31";
         $d2 = new Date($d2);
         $interval[] = $d1->diff($d2);

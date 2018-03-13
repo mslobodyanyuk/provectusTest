@@ -53,11 +53,9 @@ class Year {
         self::SEPTEMBER_NUMBER =>self::SEPTEMBER_DAYS, self::OCTOBER_NUMBER =>self::OCTOBER_DAYS, self::NOVEMBER_NUMBER =>self::NOVEMBER_DAYS,
         self::DECEMBER_NUMBER =>self::DECEMBER_DAYS,];
 
+
     /**
-     * method isLeapYear($year) - check for a leap year
-     *      * @param $year is the year for verification
-     *      * @return bool - check result
-     * @param $year
+     * @param integer $year
      * @return bool
      */
     public static function isLeapYear($year)
@@ -66,61 +64,53 @@ class Year {
     }
 
     /**
-     * method checkLeapYear($yearToCheck, array $monthsToCheck) determines on which year array to calculate days, leap or not.
-     *      * Performs a leap year check; whether the month of February of a leap year is included in the calculation.
-     *      *
-     * @param is $yearToCheck
+     * @param integer $yearToCheck
      * @param array $monthsToCheck
-     * @return array $checkedYear - returns an array with the number of days in leap-year or non-leap-year.
+     * @return array
      */
-    private function checkLeapYear($yearToCheck, array $monthsToCheck )
+    public static function determineYearMonthsDays($yearToCheck, array $monthsToCheck )
     {
-        $checkedYear = Year::isLeapYear($yearToCheck) && in_array(self::FEBRUARY_NUMBER, $monthsToCheck) ? self::$leapYear : self::$noLeapYear;
-      return $checkedYear;
+        return self::isLeapYear($yearToCheck) && in_array(self::FEBRUARY_NUMBER, $monthsToCheck) ? self::$leapYear : self::$noLeapYear;
     }
 
     /**
-     * method addYearsDays($year) returns the number of days of full years, leap or not
-     * @param $checkedYear
-     * @return int $addFullYearsDays - the number of days in full years
+     * @param integer $checkedYear
+     * @return int
      */
-    private function addFullYearsDays($checkedYear)
+    public static function addFullYearsDays($checkedYear)
     {
-        $addFullYearsDays = Year::isLeapYear($checkedYear) ? self::LEAP_YEAR_DAYS : self::NO_LEAP_YEAR_DAYS;
-        return $addFullYearsDays;
+        return self::isLeapYear($checkedYear) ? self::LEAP_YEAR_DAYS : self::NO_LEAP_YEAR_DAYS;
     }
 
     /**
-     * method fullYearsDays(array $yearsToCheck) returns the sum number of days of full years
-     * @param array $yearsToCheck is an array with a list of years
-     * @param $year
-     * @return int $fullYearsDays - the sum number of days in full years
+     * @param integer $year
+     * @param array $yearsToCheck
+     * @return int
      */
-    public function FullYearsDays(array $yearsToCheck, $year)
+    public static function FullYearsDays($year, array $yearsToCheck)
     {
         $fullYearsDays = 0;
         foreach ($yearsToCheck as $checkedYear) {
             if ($checkedYear <> $year) {
-                $fullYearsDays = $fullYearsDays + $this->addFullYearsDays($checkedYear);
+                $fullYearsDays = $fullYearsDays + self::addFullYearsDays($checkedYear);
             }
         }
         return $fullYearsDays;
     }
 
     /**
-     * method daysInEndYear() returns the number of days in the year
-     * @param $year
-     * @param $month
-     * @param $days
-     * @return int $daysInEndYear - the number of days in the year
+     * @param integer $year
+     * @param integer $month
+     * @param integer $days
+     * @return int
      */
-    public function daysInEndYear($year, $month, $days)
+    public static function daysInEndYear($year, $month, $days)
     {
       $monthsToCheck = range(1, $month);
-      $checkedYear = $this->checkLeapYear($year, $monthsToCheck);
+      $checkedYear = self::determineYearMonthsDays($year, $monthsToCheck);
       $daysInEndYear = 0;
       foreach ($monthsToCheck as $checkMonth) {
-          $fullMonthDays = Month::fullMonthDays($checkedYear, $checkMonth, $month);
+          $fullMonthDays = Month::numberDaysInMonth($checkedYear, $checkMonth, $month);
           if ($fullMonthDays !== false) {
               $daysInEndYear = $daysInEndYear + $fullMonthDays;
           }
