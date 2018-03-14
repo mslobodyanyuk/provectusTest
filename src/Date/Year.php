@@ -69,27 +69,26 @@ class Year {
         return self::isLeapYear($yearToCheck) && in_array(self::FEBRUARY_NUMBER, $monthsToCheck) ? self::$leapYear : self::$noLeapYear;
     }
 
-    /**
-     * @param integer $checkedYear
-     * @return int
-     */
-    public static function addFullYearsDays($checkedYear)
-    {
-        return self::isLeapYear($checkedYear) ? self::LEAP_YEAR_DAYS : self::NO_LEAP_YEAR_DAYS;
-    }
 
     /**
      * @param integer $year
-     * @param array $yearsToCheck
      * @return int
      */
-    public static function fullYearsDays($year, array $yearsToCheck)
+    public static function getDays($year)
+    {
+        return self::isLeapYear($year) ? self::LEAP_YEAR_DAYS : self::NO_LEAP_YEAR_DAYS;
+    }
+
+    /**
+     * @param array $years
+     * @return int
+     */
+    public static function countDays(array $years)
     {
         $fullYearsDays = 0;
-        foreach ($yearsToCheck as $checkedYear) {
-            if ($checkedYear <> $year) {
-                $fullYearsDays = $fullYearsDays + self::addFullYearsDays($checkedYear);
-            }
+
+        foreach ($years as $checkedYear) {
+            $fullYearsDays = $fullYearsDays + self::getDays($checkedYear);
         }
         return $fullYearsDays;
     }

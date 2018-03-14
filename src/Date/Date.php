@@ -106,15 +106,16 @@ class Date
         return $dateInterval;
     }
 
+
     /**
      * @return int
      */
     private function countTotalDates()
     {
-        $totalDates = 0;
-        $yearsToCheck = range(1, $this->year);
+        $rangeYears = range(1, $this->year);
+        $yearsToCheck = array_diff($rangeYears, [$this->year]);
 
-        $totalDates = Year::fullYearsDays($this->year, $yearsToCheck) + Year::daysInEndYear($this->year, $this->month, $this->days);
+        $totalDates = Year::countDays($yearsToCheck) + Year::daysInEndYear($this->year, $this->month, $this->days);
 
         return $totalDates;
     }
