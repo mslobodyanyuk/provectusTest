@@ -78,7 +78,7 @@ class Date
      * @param Date $date
      * @return int|number
      */
-    private function invertYearsTotalDays(DateInterval $dateInterval, Date $date)
+    private function getTotalDaysInvertYears(DateInterval $dateInterval, Date $date)
     {
         return ($dateInterval->years > 0) ? abs($this->totalDays - $date->getTotalDays()) : $this->days;
     }
@@ -97,7 +97,7 @@ class Date
         if($dateInterval->invert) {
             $dateInterval->months = 0;
             $dateInterval->days = $this->days;
-            $dateInterval->totalDays = $this->invertYearsTotalDays($dateInterval, $date);
+            $dateInterval->totalDays = $this->getTotalDaysInvertYears($dateInterval, $date);
         }else{
             $dateInterval->months = abs($this->month - $date->getMonths());
             $dateInterval->days = abs($this->days - $date->getDays());
@@ -115,7 +115,7 @@ class Date
         $rangeYears = range(1, $this->year);
         $yearsToCheck = array_diff($rangeYears, [$this->year]);
 
-        $totalDates = Year::countDays($yearsToCheck) + Year::daysInEndYear($this->year, $this->month, $this->days);
+        $totalDates = Year::countDays($yearsToCheck) + Year::countDaysInEndYear($this->year, $this->month, $this->days);
 
         return $totalDates;
     }

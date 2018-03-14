@@ -49,7 +49,6 @@ class Year {
         self::SEPTEMBER_NUMBER =>self::SEPTEMBER_DAYS, self::OCTOBER_NUMBER =>self::OCTOBER_DAYS, self::NOVEMBER_NUMBER =>self::NOVEMBER_DAYS,
         self::DECEMBER_NUMBER =>self::DECEMBER_DAYS,];
 
-
     /**
      * @param integer $year
      * @return bool
@@ -68,7 +67,6 @@ class Year {
     {
         return self::isLeapYear($yearToCheck) && in_array(self::FEBRUARY_NUMBER, $monthsToCheck) ? self::$leapYear : self::$noLeapYear;
     }
-
 
     /**
      * @param integer $year
@@ -99,7 +97,7 @@ class Year {
      * @param integer $days
      * @return int
      */
-    public static function daysInEndYear($year, $month, $days)
+    public static function countDaysInEndYear($year, $month, $days)
     {
       $monthsToCheck = range(1, $month);
       $checkedYear = self::getDaysByYearAndMonths($year, $monthsToCheck);
