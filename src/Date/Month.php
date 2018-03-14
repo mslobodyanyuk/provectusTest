@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Максим
- * Date: 06.03.2018
- * Time: 19:59
- */
 
 namespace src\Date;
 
-
+/**
+ * Class Month is designed to provide the number of relevant days in a month
+ */
 class Month {
 
     /**
@@ -17,7 +13,7 @@ class Month {
      * @param integer $month
      * @return bool
      */
-    public static function numberDaysInMonth($checkedYear, $checkMonth, $month)
+    public static function getNumberDaysInMonth($checkedYear, $checkMonth, $month)
     {
         return ($checkMonth <> $month) ? $checkedYear[$checkMonth] : false;
     }

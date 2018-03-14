@@ -89,7 +89,7 @@ class Date
      */
     public function diff(Date $date)
     {
-        $dateInterval = new DateInterval();
+        $dateInterval = DateInterval::create();
 
         $dateInterval->invert = $this->totalDays > $date->getTotalDays();
         $dateInterval->years = abs($this->year - $date->getYear());

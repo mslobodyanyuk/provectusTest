@@ -1,20 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Максим
- * Date: 06.03.2018
- * Time: 19:10
- */
 
 namespace src\Date;
 
-
+/**
+ * Class Year is intended to provide methods for calculating the period between years
+ */
 class Year {
 
     const
         //$noLeapYear / $leapYear
         JANUARY_NUMBER = '1', JANUARY_DAYS = 31,
-        FEBRUARY_NUMBER = '2' /*checkLeapYear*/, FEBRUARY_DAYS_NO_LEAP_YEAR = 28, FEBRUARY_DAYS_LEAP_YEAR = 29,
+        FEBRUARY_NUMBER = '2' /*getDaysByYearAndMonths*/, FEBRUARY_DAYS_NO_LEAP_YEAR = 28, FEBRUARY_DAYS_LEAP_YEAR = 29,
         MARCH_NUMBER = '3', MARCH_DAYS = 31,
         APRIL_NUMBER = '4', APRIL_DAYS = 30,
         MAY_NUMBER = '5', MAY_DAYS = 31,
@@ -68,7 +64,7 @@ class Year {
      * @param array $monthsToCheck
      * @return array
      */
-    public static function determineYearMonthsDays($yearToCheck, array $monthsToCheck )
+    public static function getDaysByYearAndMonths($yearToCheck, array $monthsToCheck)
     {
         return self::isLeapYear($yearToCheck) && in_array(self::FEBRUARY_NUMBER, $monthsToCheck) ? self::$leapYear : self::$noLeapYear;
     }
@@ -87,7 +83,7 @@ class Year {
      * @param array $yearsToCheck
      * @return int
      */
-    public static function FullYearsDays($year, array $yearsToCheck)
+    public static function fullYearsDays($year, array $yearsToCheck)
     {
         $fullYearsDays = 0;
         foreach ($yearsToCheck as $checkedYear) {
@@ -107,10 +103,10 @@ class Year {
     public static function daysInEndYear($year, $month, $days)
     {
       $monthsToCheck = range(1, $month);
-      $checkedYear = self::determineYearMonthsDays($year, $monthsToCheck);
+      $checkedYear = self::getDaysByYearAndMonths($year, $monthsToCheck);
       $daysInEndYear = 0;
       foreach ($monthsToCheck as $checkMonth) {
-          $fullMonthDays = Month::numberDaysInMonth($checkedYear, $checkMonth, $month);
+          $fullMonthDays = Month::getNumberDaysInMonth($checkedYear, $checkMonth, $month);
           if ($fullMonthDays !== false) {
               $daysInEndYear = $daysInEndYear + $fullMonthDays;
           }

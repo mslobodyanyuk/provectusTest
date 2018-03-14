@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Максим
- * Date: 20.02.2018
- * Time: 20:02
- */
 
 namespace src\Date;
 
@@ -38,4 +32,11 @@ class DateInterval
      * @var boolean
      */
     public $invert;
+
+    /**
+     * @return DateInterval
+     */
+    public static function create(){
+        return new DateInterval();
+    }
 }
