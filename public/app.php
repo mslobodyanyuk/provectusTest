@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 use \app\Kernel\Kernel;
-use \src\controller;
+use \src\Controller;
 
 /**
  * Loading design classes
@@ -10,7 +10,10 @@ spl_autoload_register(
     function($class){
         $path = realpath (__DIR__ . '/../'.str_replace("\\","/",$class.".php"));
 		if(!file_exists($path)){
-			echo  'Path abnormal: ',$path;
+            echo  'Path abnormal: ',$path;
+            echo  '<br/>class name: ',$class;
+            echo  '<br/>__DIR__ : ', __DIR__;
+            echo  '<br/>/../.str_replace("\\","/",$class.".php"): '.'/../'.str_replace("\\","/",$class.".php");
 		}
 		else{
 			require_once $path;

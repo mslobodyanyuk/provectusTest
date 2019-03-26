@@ -1,5 +1,5 @@
 <?php
-namespace src\controller;
+namespace src\Controller;
 use src\Date\Date;
 use DateTime;
 /**

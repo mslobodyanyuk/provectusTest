@@ -2,7 +2,7 @@
 namespace app\Kernel;
 use \Symfony\Component\Yaml\Yaml;
 use \app\Route\Route;
-use \src\controller;
+use \src\Controller;
 
 /**
  * Kernel - Class kernel singleton, which is loaded configuration is transmitted to the router receives data from the controller,
